@@ -1,0 +1,252 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://bsu.by/soap-web-service"
+           targetNamespace="http://bsu.by/soap-web-service" elementFormDefault="qualified">
+
+    <xs:element name="getUserByIdRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:unsignedLong"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getUserByIdResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="user" type="tns:user"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getUserFriendsRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:unsignedLong"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getUserFriendsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="friends" type="tns:users"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getUserPostsRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:unsignedLong"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getUserPostsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="posts" type="tns:posts"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getUserThreadsRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:unsignedLong"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getUserThreadsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="threads" type="tns:threads"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getThreadCommentsRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:unsignedLong"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getThreadCommentsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="comments" type="tns:comments"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="addFriendRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userId" type="xs:unsignedLong"/>
+                <xs:element name="friendId" type="xs:unsignedLong"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="addFriendResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="friend" type="tns:user"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="deleteFriendRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userId" type="xs:unsignedLong"/>
+                <xs:element name="friendId" type="xs:unsignedLong"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="deleteFriendResponse"/>
+
+    <xs:element name="addPostRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="post" type="tns:post"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="addPostResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="post" type="tns:post"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="addLikeRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userId" type="xs:unsignedLong"/>
+                <xs:element name="postId" type="xs:unsignedLong"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="addLikeResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="like" type="tns:like"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="addCommentRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userId" type="xs:unsignedLong"/>
+                <xs:element name="content" type="xs:string"/>
+                <xs:element name="postId" type="xs:unsignedLong"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="addCommentResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="comment" type="tns:comment"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="user">
+        <xs:sequence>
+            <xs:element name="id" type="xs:unsignedLong"/>
+            <xs:element name="nickname" type="xs:string"/>
+            <xs:element name="friends" type="tns:users"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="post">
+        <xs:sequence>
+            <xs:element name="id" type="xs:unsignedLong"/>
+            <xs:element name="content" type="xs:string"/>
+            <xs:element name="author" type="tns:user"/>
+            <xs:element name="comments" type="tns:comments"/>
+            <xs:element name="likes" type="tns:likes"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="comment">
+        <xs:sequence>
+            <xs:element name="id" type="xs:unsignedLong"/>
+            <xs:element name="content" type="xs:string"/>
+            <xs:element name="author" type="tns:user"/>
+            <xs:element name="post" type="tns:post"/>
+            <xs:element name="answerTo" type="tns:comment"/>
+            <xs:element name="answers" type="tns:comments"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="comments">
+        <xs:sequence>
+            <xs:element name="comment" type="tns:comment" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="like">
+        <xs:sequence>
+            <xs:element name="id" type="xs:unsignedLong"/>
+            <xs:element name="owner" type="tns:user"/>
+            <xs:element name="post" type="tns:post"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="likes">
+        <xs:sequence>
+            <xs:element name="like" type="tns:like" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="users">
+        <xs:sequence>
+            <xs:element name="user" type="tns:user" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="thread">
+        <xs:sequence>
+            <xs:element name="id" type="xs:unsignedLong"/>
+            <xs:element name="participants" type="tns:users"/>
+            <xs:element name="messages" type="tns:messages"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="message">
+        <xs:sequence>
+            <xs:element name="id" type="xs:unsignedLong"/>
+            <xs:element name="content" type="xs:string"/>
+            <xs:element name="author" type="tns:user"/>
+            <xs:element name="thread" type="tns:thread"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="messages">
+        <xs:sequence>
+            <xs:element name="message" type="tns:message" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="posts">
+        <xs:sequence>
+            <xs:element name="post" type="tns:post" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="threads">
+        <xs:sequence>
+            <xs:element name="thread" type="tns:thread" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
