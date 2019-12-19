@@ -21,25 +21,23 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 public class SendToLambda implements DeliverCallback {
-    private final static String LAMBDA_URL = "https://uqrrxk46ak.execute-api.us-east-1.amazonaws.com/dev/process";
-    private final static String FROM = "vikabulgak14@mail.ru";
+    private final static String LAMBDA_URL = "https://7guaat1tqj.execute-api.us-east-1.amazonaws.com/dev/message/create/";
+    private final static String FROM = "bulgak.viktoriya@gmail.com";
     private final static String TO = "bulgak.viktoriya@gmail.com";
     private final static String SUBJECT = "Message from RabbitMQ";
-    private final static String SMTP_HOST = "a8ewmlezqf.execute-api.us-east-1.amazonaws.com";
-    private final static String SMTP_USERNAME = "AKIAXZXK4ZULA2NBRVG3";
-    private final static String SMTP_PASSWORD = "BD98bFj/GtmQzqwKtn/SghlOxUGoOnDTctkPMwn6qAbl";
-
-    private Logger logger = LogManager.getLogger(SendToLambda.class);
+    private final static String SMTP_HOST = "email-smtp.us-west-2.amazonaws.com";
+    private final static String SMTP_USERNAME = "AKIAZNYRQLQJJGLXP6GC";
+    private final static String SMTP_PASSWORD = "BGz79zTTCjFjMfm97bbKMEV5yJOsHo8SqyoJD5SqQAIq";
 
     @Override
     public void handle(String s, Delivery delivery) {
         String message = new String(delivery.getBody(), StandardCharsets.UTF_8);
-        logger.info("Received message: " + message);
+        System.out.println("Received message: " + message);
         String processedMessage;
         try {
             processedMessage = requestProcessedMessage(message).replaceAll("^\"(.*)\"$", "$1");
         } catch (IOException e) {
-            logger.error("Failed to get processed message from lambda", e);
+            System.out.println("Failed to get processed message from lambda" + e);
             return;
         }
         sendEmail(processedMessage);
@@ -59,7 +57,7 @@ public class SendToLambda implements DeliverCallback {
     }
 
     private void sendEmail(String text) {
-        logger.info("Sending email");
+        System.out.println("Sending email");
         Email email = EmailBuilder.startingBlank()
                 .from(FROM)
                 .to(TO)
@@ -76,6 +74,6 @@ public class SendToLambda implements DeliverCallback {
                 .buildMailer();
 
         mailer.sendMail(email);
-        logger.info("Message sent successfully");
+        System.out.println("Message sent successfully");
     }
 }

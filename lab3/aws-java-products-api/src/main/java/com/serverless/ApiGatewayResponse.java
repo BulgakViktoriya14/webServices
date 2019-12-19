@@ -48,7 +48,6 @@ public class ApiGatewayResponse {
 
 	public static class Builder {
 
-		private static final Logger LOG = LogManager.getLogger(ApiGatewayResponse.Builder.class);
 
 		private static final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -118,7 +117,7 @@ public class ApiGatewayResponse {
 				try {
 					body = objectMapper.writeValueAsString(objectBody);
 				} catch (JsonProcessingException e) {
-					LOG.error("failed to serialize object", e);
+					System.out.println("failed to serialize object" + e);
 					throw new RuntimeException(e);
 				}
 			} else if (binaryBody != null) {
